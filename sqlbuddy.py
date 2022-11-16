@@ -2,13 +2,53 @@ import streamlit as st
 import re
 from sql_formatter.core import format_sql
 
-def split_sql(sql, mode):
-    queries = sql.split(';')
-    new_sql = []
-    for query in queries:
-    	if mode == 'in':
-        	new_sql.append(in_to_inner_join(query))
-    return ''.join(new_sql)
+def split_sql(sql, mode, db):
+	try:
+		queries = sql.split(';')
+		new_sql = []
+		for query in queries:
+			query = re.sub(r"[ \t]", r" ", query)
+			if mode == 'in':
+				new_sql.append(in_to_inner_join(query))
+			if mode == 'snowflake':
+				new_sql.append(snowSQL(query, db))
+		return ''.join(new_sql)
+	except:
+		return ''
+
+def snowSQL(text, db = 'MHP_FWA_DW'):    
+
+	isnull = r"(?i)ISNULL *\(([\w.@]+) *[, ]+([\w@.]+) *\)"
+	text = re.sub(isnull, r"COALESCE(\1,\2)", text)
+
+	tryconv = r"(?i)TRY_CONVERT *\(([\w.@]+) *[, ]+([\w@.]+) *[\w@., ]*\)"
+	text = re.sub(tryconv, r"TRY_CAST(\2 AS \1) ", text)
+
+	tables = r"(?i)(?:[\w]*\.)*(PHI.)((\w)*)"
+	text = re.sub(tables, r"{}.\1\2 ".format(db), text)
+    
+	curr_db = r"(?i)(?:^|\W)DB_NAME()"
+	text = re.sub(curr_db, r" CURRENT_DATABASE() ", text)
+
+	outer = r"(?i)OUTER *APPLY"
+	text = re.sub(outer, r" LEFT OUTER JOIN ", text)
+
+	prt = r"(?i)(?:^|\W)PRINT *'(.*?)'"
+	text = re.sub(prt, r"", text)
+    
+	eq = r"([\w. ]+) *= *((([\w ]*[(]+)+[\w. ',]*[ )',]+)+|[\w. ]*),"
+	text = re.sub(eq, r"\2 as \1,", text)
+    
+	case = r"([\w. ]+) *= *(CASE *WHEN *[\w. ()',=]+ *END *),"
+	text = re.sub(case, r"\2 as \1,", text)
+
+	drop = r"(?i)DROP *TABLE *( *IF *EXISTS *) *\#(.*)(?:$|\W)"
+	text = re.sub(drop, r"CREATE OR REPLACE TEMPORARY TABLE \2 AS \n", text)
+
+	remove = r"(?i)INTO *\#(.*)|\#|(?:^|\W)GO(?:^|\W)|USE *([\w]*)|\[|\]"
+	text = re.sub(remove, r"", text)
+    
+	return text
 
 #change an in statement to an innner join on a temp table if the size fo list in the in is greater than min_list
 def in_to_inner_join(sql, min_list=0):
@@ -42,20 +82,28 @@ with st.sidebar:
 with col1:
 	#st.header('Insert SQL Script Here')
 	txt = st.text_area('SQL to refactor', '''SELECT * 
-		FROM ...
+		FROM ... ;
     ''')
 sql = 'SELECT * FROM ...'
+#find database name
+res = re.search(r"(?i)USE *([\w]*)", txt)
+try:
+	db = res.group(1)
+except:
+	db = 'MHP_FWA_DW' #default to MHP_FWA_DW if not found
+
+
 if in_to_inner:
-	sql = format_sql(split_sql(txt, "in"))
-	sql = re.sub(r';\s+', ';\n', sql)
-elif snowflake:
-	#sql = format_sql(split_sql(txt, "snowflake"))
-	#sql = re.sub(r';\s+', ';\n', sql)
-	st.text('Sorry, Snowflake is still under construction')
-else:
+	txt = format_sql(split_sql(txt, "in", db))
+	txt = re.sub(r';\s+', ';\n', txt)
+if snowflake:
+	txt = format_sql(split_sql(txt, "snowflake", db))
+	txt = re.sub(r';\s+', ';\n', txt)
+	#st.text('Sorry, Snowflake is still under construction')
+if not snowflake and not in_to_inner:
 	st.text('Please choose an option from the sidebar')
 with col2:
 	#st.header('SQL Output')
 	#txt = st.text_area('SQL Output', '''''')
-	st.code(sql)
+	st.code(txt)
 
