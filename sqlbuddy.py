@@ -81,8 +81,7 @@ with st.sidebar:
 
 with col1:
 	#st.header('Insert SQL Script Here')
-	txt = st.text_area('SQL to refactor', '''
-USE MHP_FWA_DW;
+	txt = st.text_area('SQL to refactor', '''USE MHP_FWA_DW;
 GO;
 SELECT PAID = ISNULL(FCL.PAID_AMT, 0) 
 FROM PHI.FACT_CLAIM_LINE FCL
