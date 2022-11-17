@@ -82,12 +82,12 @@ with st.sidebar:
 with col1:
 	#st.header('Insert SQL Script Here')
 	txt = st.text_area('SQL to refactor', '''
-	USE MHP_FWA_DW;
-	GO;
-	SELECT PAID = ISNULL(FCL.PAID_AMT, 0) 
-	FROM PHI.FACT_CLAIM_LINE FCL
-	LEFT JOIN PHI.CPT4 CPT on CPT.CPT_SID = FCL.CPT_SID
-	WHERE CPT.CPT_CODE in ('99215', '99216', '99217', '99218');
+USE MHP_FWA_DW;
+GO;
+SELECT PAID = ISNULL(FCL.PAID_AMT, 0) 
+FROM PHI.FACT_CLAIM_LINE FCL
+LEFT JOIN PHI.CPT4 CPT on CPT.CPT_SID = FCL.CPT_SID
+WHERE CODE in ('99215', '99216', '99217', '99218');
    
    
    ''')
