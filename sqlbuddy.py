@@ -36,7 +36,7 @@ def snowSQL(text, db = 'MHP_FWA_DW'):
 	prt = r"(?i)(?:^|\W)PRINT *'(.*?)'"
 	text = re.sub(prt, r"", text)
     
-	eq = r"([\w. ]+) *= *((([\w ]*[(]+)+[\w. ',]*[ )',]+)+|[\w. ]*)(,|\s*FROM)"
+	eq = r"([\w.]+) *= *(?:(?:(?:[\w ]*[(]+)+([\w. ']*)[\w. ',]*[ )',]+)+|[\w. ]*)(,|\s*FROM)"
 	text = re.sub(eq, r"\2 as \1\3", text)
     
 	case = r"([\w. ]+) *= *(CASE *WHEN *[\w. ()',=]+ *END *),"
