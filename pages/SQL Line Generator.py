@@ -4,23 +4,33 @@ import re
 st.title('SQL Buddy')
 col1, col2 = st.columns(2, gap='medium')
 with st.sidebar:
-    mode = st.selectbox("Choose what to add in front of elements in list", ('SUM', 'COUNT', 'AVG', 'Other'))
-    if mode == 'Other':
-    	other = st.text_input('Type what you would like in front of the elements in the list')
+	deli = st.selectbox("Select Delimeter", (',', ';', '|', 'Other'))
+	if deli == 'Other':
+		deli = st.text_input('Please type in Delimeter')
+	kind = st.selectbox('What would you like to do to the list', ('Add Text in Front', 'Convert to Table Notation'))	
+	if kind == 'Add Text in Front':
+		mode = st.selectbox("Choose what to add in front of elements in list", ('SUM', 'COUNT', 'AVG', 'Other'))
+		if mode == 'Other':
+			mode = st.text_input('Type what you would like in front of the elements in the list')
+	else:
+		mode = ''
+		end = ''
 
 with col1:
 	txt = st.text_area('List of Elements', '''line_billed_amt, line_unit_cnt, line_allowed_amt''')
 
 txt = re.sub(r'\s+', ' ', txt)
-cols_list = txt.split(',')
+cols_list = txt.split(deli)
 cols_list = [x.strip(' ') for x in cols_list]
 new_list = []
-header = mode
-if mode == 'Other':
-	header = other
+
+
+
 for item in cols_list:
-	item = re.sub(r'line_', '', item)
-	new = header + '(' + item + ') as ' + item
+	if kind == 'Add Text in Front':
+		item = re.sub(r'line_', '', item)
+		end = ' as ' + item
+	new = mode + '(' + item + ')' + end
 	new_list.append(new)
 
 with col2:
