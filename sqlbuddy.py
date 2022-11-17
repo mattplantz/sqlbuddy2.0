@@ -52,7 +52,7 @@ def snowSQL(text, db = 'MHP_FWA_DW'):
 	remove = r"(?i)INTO *\#(.*)|\#|(?:^|\W)GO(?:^|\W)|USE *([\w]*)|\[|\]"
 	text = re.sub(remove, r"", text)
 	#double check go is gone
-	remove = r"(?i)(?:^|\W)GO(?:^|\W)"
+	remove = r"(?i)(?:^|\W)go(?:^|\W)"
 	text = re.sub(remove, r"", text)
     
 	return text
