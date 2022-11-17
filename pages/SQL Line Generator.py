@@ -4,9 +4,6 @@ import re
 st.title('SQL Buddy')
 col1, col2 = st.columns(2, gap='medium')
 with st.sidebar:
-	deli = st.selectbox("Select Delimeter", (',', ';', '|', 'Other'))
-	if deli == 'Other':
-		deli = st.text_input('Please type in Delimeter')
 	kind = st.selectbox('What would you like to do to the list', ('Add Text in Front', 'Convert to Table Notation'))	
 	if kind == 'Add Text in Front':
 		mode = st.selectbox("Choose what to add in front of elements in list", ('SUM', 'COUNT', 'AVG', 'Other'))
@@ -15,6 +12,9 @@ with st.sidebar:
 	else:
 		mode = ''
 		end = ''
+	deli = st.selectbox("Select Delimeter", (',', ';', '|', 'Other'))
+	if deli == 'Other':
+		deli = st.text_input('Please type in Delimeter')
 
 with col1:
 	txt = st.text_area('List of Elements', '''line_billed_amt, line_unit_cnt, line_allowed_amt''')
