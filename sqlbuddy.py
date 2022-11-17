@@ -95,7 +95,7 @@ LEFT JOIN PHI.CPT4 CPT on CPT.CPT_SID = FCL.CPT_SID
 WHERE CODE in ('99215', '99216', '99217', '99218');
    
    
-   ''', label_visibility="collapsed", height=50)
+   ''', label_visibility="collapsed", height=500)
 sql = 'SELECT * FROM ...'
 #find database name
 res = re.search(r"(?i)USE *([\w]*)", txt)
