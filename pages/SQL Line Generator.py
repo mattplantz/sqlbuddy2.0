@@ -7,7 +7,7 @@ paren1 = '('
 paren2 = ')'
 		
 with st.sidebar:
-	kind = st.selectbox('What would you like to do to the list', ('Add Text in Front', 'Convert to Table Notation'))	
+	kind = st.radio('What would you like to do to the list', ['Add Text in Front', 'Convert to Table Notation'])	
 	if kind == 'Add Text in Front':
 		mode = st.selectbox("Choose what to add in front of elements in list", ('SUM', 'COUNT', 'AVG', 'Other'))
 		if mode == 'Other':
