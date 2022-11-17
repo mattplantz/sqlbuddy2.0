@@ -81,9 +81,10 @@ with st.sidebar:
 
 with col1:
 	#st.header('Insert SQL Script Here')
-	txt = st.text_area('SQL to refactor', '''SELECT * 
-		FROM ... ;
-    ''')
+	txt = st.text_area('SQL to refactor', '''SELECT * FROM ... ;
+   
+   
+   ''')
 sql = 'SELECT * FROM ...'
 #find database name
 res = re.search(r"(?i)USE *([\w]*)", txt)
