@@ -1,7 +1,7 @@
 import streamlit as st
 import re
 
-#st.title('SQL Buddy')
+st.title('SQL Buddy - Aggregator-inator')
 col1, col2 = st.columns(2, gap='medium')
 paren1 = '('
 paren2 = ')'
