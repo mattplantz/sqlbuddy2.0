@@ -41,4 +41,4 @@ for item in cols_list:
 	new_list.append(new)
 
 with col2:
-	st.text("Output:", ',\n'.join(new_list))
+	st.text(',\n'.join(new_list))
