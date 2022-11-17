@@ -24,7 +24,7 @@ with st.sidebar:
 		deli = st.text_input('Please type in Delimeter')
 
 with col1:
-	txt = st.text_area('List of Elements', '''line_billed_amt, line_unit_cnt, line_allowed_amt''')
+	txt = st.text_area('List of Elements', '''line_billed_amt, line_unit_cnt, line_allowed_amt''', label_visibility="collapsed")
 
 txt = re.sub(r'\s+', ' ', txt)
 cols_list = txt.split(deli)
