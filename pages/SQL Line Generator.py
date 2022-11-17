@@ -3,6 +3,9 @@ import re
 
 st.title('SQL Buddy')
 col1, col2 = st.columns(2, gap='medium')
+paren1 = '('
+paren2 = ')'
+		
 with st.sidebar:
 	kind = st.selectbox('What would you like to do to the list', ('Add Text in Front', 'Convert to Table Notation'))	
 	if kind == 'Add Text in Front':
@@ -12,6 +15,10 @@ with st.sidebar:
 	else:
 		mode = ''
 		end = ''
+		quotes = st.checkbox('Add Quotes?')
+		if quotes:
+			paren1 = "('"
+			paren2 = "')"
 	deli = st.selectbox("Select Delimeter", (',', ';', '|', 'Other'))
 	if deli == 'Other':
 		deli = st.text_input('Please type in Delimeter')
@@ -30,7 +37,7 @@ for item in cols_list:
 	if kind == 'Add Text in Front':
 		item = re.sub(r'line_', '', item)
 		end = ' as ' + item
-	new = mode + '(' + item + ')' + end
+	new = mode + paren1 + item + paren2 + end
 	new_list.append(new)
 
 with col2:
