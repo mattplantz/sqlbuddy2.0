@@ -1,7 +1,7 @@
 import streamlit as st
 import re
 
-st.title('SQL Buddy: Aggregator-inator')
+st.header('SQL Buddy: Aggregator-inator')
 st.subheader('Please copy in your list of data to either add an aggregation function or to convert it into table notation.')
 col1, col2 = st.columns(2, gap='medium')
 paren1 = '('
