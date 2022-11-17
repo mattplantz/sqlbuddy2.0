@@ -36,11 +36,11 @@ def snowSQL(text, db = 'MHP_FWA_DW'):
 	prt = r"(?i)(?:^|\W)PRINT *'(.*?)'"
 	text = re.sub(prt, r"", text)
     
-	eq_w_paran = r"([\w.]+) *= *(?:(?:(?:[\w ]*[(]+)+([\w. ']*)[\w. ',]*[ )',]+)+)(,|\s*FROM)"
+	eq_w_paran = r"([\w.]+) *= *(?:(?:(?:[\w ]*[(]+)+([\w. ']*)[\w. ',]*[ )',]+)+)(\s*,|\s*FROM)"
 	text = re.sub(eq_w_paran, r"\2 as \1\3", text)
 	
 	#eq = r"([\w.]+) *= *(?:(?:(?:[\w ]*[(]+)+([\w. ']*)[\w. ',]*[ )',]+)+|([\w. ]*))(,|\s*FROM)"
-	eq = r"([\w.]+) *= *([\w. ]*)(,|\s*FROM)"
+	eq = r"([\w.]+) *= *([\w. ]*)(\s*,|\s*FROM)"
 	text = re.sub(eq, r"\2 as \1\3", text)
     
 	case = r"([\w. ]+) *= *(CASE *WHEN *[\w. ()',=]+ *END *),"
@@ -88,6 +88,7 @@ with col1:
 	txt = st.text_area('SQL to refactor', '''USE MHP_FWA_DW;
 GO;
 SELECT PAID = ISNULL(FCL.PAID_AMT, 0) 
+, ALLOWED = ALLOWED_AMT
 FROM PHI.FACT_CLAIM_LINE FCL
 LEFT JOIN PHI.CPT4 CPT on CPT.CPT_SID = FCL.CPT_SID
 WHERE CODE in ('99215', '99216', '99217', '99218');
