@@ -77,7 +77,8 @@ def in_to_inner_join(sql, min_list=0):
         sql = re.sub(r'(?i)WHERE\s+;', ';', sql)
     return sql
 
-st.title('SQL Buddy')
+st.header('SQL Buddy : Edit Full Queries')
+st.subheader('Please copy and paster your SQL Query in the box to the left and choose what actions you would like to perform')
 col1, col2 = st.columns(2, gap='medium')
 with st.sidebar:
     in_to_inner = st.checkbox("Convert in to inner joins")
@@ -94,7 +95,7 @@ LEFT JOIN PHI.CPT4 CPT on CPT.CPT_SID = FCL.CPT_SID
 WHERE CODE in ('99215', '99216', '99217', '99218');
    
    
-   ''')
+   ''', label_visibility="collapsed")
 sql = 'SELECT * FROM ...'
 #find database name
 res = re.search(r"(?i)USE *([\w]*)", txt)
