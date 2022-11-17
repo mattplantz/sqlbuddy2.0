@@ -116,5 +116,5 @@ if not snowflake and not in_to_inner:
 with col2:
 	#st.header('SQL Output')
 	#txt = st.text_area('SQL Output', '''''')
-	st.code(txt)
+	st.code(txt, language="sql")
 
