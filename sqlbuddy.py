@@ -54,9 +54,6 @@ def snowSQL(text, db = 'MHP_FWA_DW'):
 	
 	remove = r"(?i)INTO *\#(.*)|\#|(?:^|\W)GO(?:$|\W)|USE *([\w]*)|\[|\]|INTO *(tmp.)(.*)"
 	text = re.sub(remove, r"", text)
-	
-	tonum = r"(?i)isnumeric\((.*)\)"
-	text = re.sub(tonum,r"is_real(to_variant(\1)) ", text)
     
 	return text
 
