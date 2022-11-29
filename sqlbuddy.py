@@ -48,7 +48,10 @@ def snowSQL(text, db = 'MHP_FWA_DW'):
 
 	drop = r"(?i)DROP *TABLE *( *IF *EXISTS *) *\#(.*)(?:$|\W)"
 	text = re.sub(drop, r"CREATE OR REPLACE TEMPORARY TABLE \2 AS \n", text)
-
+	
+	droptmp = r"(?i)DROP *TABLE *( *IF *EXISTS *) *(tmp.)(.*)(?:$|\W)"
+	text = re.sub(drop, r"CREATE OR REPLACE TEMPORARY TABLE \3 AS \n", text)
+	
 	remove = r"(?i)INTO *\#(.*)|\#|(?:^|\W)GO(?:$|\W)|USE *([\w]*)|\[|\]"
 	text = re.sub(remove, r"", text)
     
