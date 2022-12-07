@@ -111,13 +111,13 @@ except:
 if in_to_inner:
 	try:
 		txt = format_sql(split_sql(txt, "in", db))
-	else:
+	except:
 		txt= split_sql(txt, "in", db)
 	txt = re.sub(r';\s+', ';\n', txt)
 if snowflake:
 	try:
 		txt = format_sql(split_sql(txt, "snowflake", db))
-	else:
+	except:
 		txt = split_sql(txt, "snowflake", db)
 	txt = re.sub(r';\s+', ';\n', txt)
 	#st.text('Sorry, Snowflake is still under construction')
