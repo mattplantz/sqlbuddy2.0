@@ -19,7 +19,7 @@ def split_sql(sql, mode, db):
 def snowSQL(text, db = 'MHP_FWA_DW'):    
 
 	isnull = r"(?i)ISNULL *\((([\w.@]+[()'.,]*)+) *[,]+ *([\w@.']+) *\)" 
-	text = re.sub(isnull, r"COALESCE(\1,\2)", text)
+	text = re.sub(isnull, r"COALESCE(\1,\3)", text)
 
 	tryconv = r"(?i)TRY_CONVERT *\(([\w.@]+) *[, ]+([\w@.]+) *[\w@., ]*\)"
 	text = re.sub(tryconv, r"TRY_CAST(\2 AS \1) ", text)
