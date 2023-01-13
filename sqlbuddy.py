@@ -109,7 +109,7 @@ st.header('SQL Buddy : Edit Full Queries')
 st.subheader('Please copy and paste your SQL Query in the box to the left and choose what actions you would like to perform')
 col1, col2 = st.columns(2, gap='medium')
 with st.sidebar:
-    in_to_inner = st.checkbox("Convert in to inner joins in MS SQL Server")
+    in_to_inner = st.checkbox("Convert in to inner joins on MS SQL Server")
     in_to_inner_snow = st.checkbox("Convert in to inner joins on Snowflake")
     snowflake = st.checkbox("Convert to Snowflake")
 
