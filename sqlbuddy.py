@@ -10,6 +10,8 @@ def split_sql(sql, mode, db):
 			query = re.sub(r"[ \t]", r" ", query)
 			if mode == 'in':
 				new_sql.append(in_to_inner_join(query))
+			if mode == 'in_snow':
+				new_sql.append(in_to_inner_join_snow(query))
 			if mode == 'snowflake':
 				new_sql.append(snowSQL(query, db))
 		return ''.join(new_sql)
@@ -80,11 +82,35 @@ def in_to_inner_join(sql, min_list=0):
         sql = re.sub(r'(?i)WHERE\s+;', ';', sql)
     return sql
 
+# change an in statement to inner join with snowflake logic
+def in_to_inner_join_snow(sql, min_list=0):
+    find_list = r"(?i)([\w.]+) *in *[(]+([\w', ]+)[)]+"
+    pattern = re.compile(find_list)
+    for match in pattern.finditer(sql):
+        var = match.group(1)
+        col_name = re.sub('\.', '_', var)
+        col_name = col_name[:col_name.find('_')]
+        vals = match.group(2)
+        vals = vals.split(',')
+        vals = [x.strip(' ') for x in vals]
+        varchar_size = len(max(vals, key=len))+1
+        line_1 = f' \nCREATE OR REPLACE TEMPORARY TABLE {col_name}_VALUES ({col_name} VARCHAR({varchar_size}));'
+        line_2 = 'INSERT INTO {}_VALUES VALUES {}'.format(col_name,' '.join('({}),'.format(i) for i in vals))
+        create_table = line_1 +  '\n' + line_2[:-1]
+        sql = re.sub(r'(?i)(SELECT [\s\S]+)', r'{};\n\n\1;'.format(create_table), sql)
+        sql = re.sub(find_list, '', sql)
+        sql = re.sub(r'(?i)WHERE', f'INNER JOIN #{col_name}_VALUES {col_name[:4]} ON {col_name[:4]}.{col_name} = {var}\nWHERE', sql)
+        sql = re.sub(r'(?i)and\s+and', 'AND', sql)
+        sql = re.sub(r'(?i)WHERE\s+and', 'WHERE', sql)
+        sql = re.sub(r'(?i)WHERE\s+;', ';', sql)
+    return sql
+
 st.header('SQL Buddy : Edit Full Queries')
 st.subheader('Please copy and paste your SQL Query in the box to the left and choose what actions you would like to perform')
 col1, col2 = st.columns(2, gap='medium')
 with st.sidebar:
-    in_to_inner = st.checkbox("Convert in to inner joins")
+    in_to_inner = st.checkbox("Convert in to inner joins in MS SQL Server")
+    in_to_inner_snow = st.checkbox("Convert in to inner joins on Snowflake")
     snowflake = st.checkbox("Convert to Snowflake")
 
 with col1:
@@ -113,6 +139,12 @@ if in_to_inner:
 		txt = format_sql(split_sql(txt, "in", db))
 	except:
 		txt= split_sql(txt, "in", db)
+	txt = re.sub(r';\s+', ';\n', txt)
+if in_to_inner_snow:
+	try:
+		txt = format_sql(split_sql(txt, "in_snow", db))
+	except:
+		txt= split_sql(txt, "in_snow", db)
 	txt = re.sub(r';\s+', ';\n', txt)
 if snowflake:
 	try:
