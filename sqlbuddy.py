@@ -99,7 +99,7 @@ def in_to_inner_join_snow(sql, min_list=0):
         create_table = line_1 +  '\n' + line_2[:-1]
         sql = re.sub(r'(?i)(SELECT [\s\S]+)', r'{};\n\n\1;'.format(create_table), sql)
         sql = re.sub(find_list, '', sql)
-        sql = re.sub(r'(?i)WHERE', f'INNER JOIN #{col_name}_VALUES {col_name[:4]} ON {col_name[:4]}.{col_name} = {var}\nWHERE', sql)
+        sql = re.sub(r'(?i)WHERE', f'INNER JOIN {col_name}_VALUES {col_name[:4]} ON {col_name[:4]}.{col_name} = {var}\nWHERE', sql)
         sql = re.sub(r'(?i)and\s+and', 'AND', sql)
         sql = re.sub(r'(?i)WHERE\s+and', 'WHERE', sql)
         sql = re.sub(r'(?i)WHERE\s+;', ';', sql)
