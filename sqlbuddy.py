@@ -55,7 +55,7 @@ def snowSQL(text, db = 'MHP_FWA_DW'):
 	text = re.sub(droptmp, r"CREATE OR REPLACE TEMPORARY TABLE \3 AS \n", text)
 	
 	dele = r"(?i)delete\s+\w+\s+from (\W\w*)\s+(\w+)\s+inner join\s(\W\w+)\s+(\w+)\s+on\s(\w*.*)\s+((and \w*.*\s+)+)\s+where\s+(\w*\s*=\s*[\W\w]\w[\W\w])"
-	text = re.sub(dele, r"DELETE FROM \1 \2 \n USING \3 \4 WHERE \5 \6 \8",text)
+	text = re.sub(dele, r"DELETE FROM \1 \2 \n USING \3 \4 WHERE \5 \6 \n and \8",text)
 	
 	remove = r"(?i)INTO *\#(.*)|\#|(?:^|\W)GO(?:$|\W)|USE *([\w]*)|\[|\]|INTO *(tmp.)(.*)"
 	text = re.sub(remove, r"",text)
