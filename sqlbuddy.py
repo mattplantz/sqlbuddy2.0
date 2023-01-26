@@ -154,8 +154,8 @@ if in_to_inner_snow:
 	txt = re.sub(r';\s+', ';\n', txt)
 if snowflake:
 	try:
-		txt = format_sql(split_sql(txt, "snowflake", db))
-		#txt = split_sql(txt, "snowflake", db)
+		#txt = format_sql(split_sql(txt, "snowflake", db))
+		txt = split_sql(txt, "snowflake", db)
 	except:
 		txt = split_sql(txt, "snowflake", db)
 	txt = re.sub(r';\s+', ';\n', txt)
