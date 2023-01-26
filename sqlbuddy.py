@@ -151,12 +151,13 @@ if in_to_inner_snow:
 	txt = re.sub(r';\s+', ';\n', txt)
 if snowflake:
 	try:
-		txt = format_sql(split_sql(txt, "snowflake", db))
+		#txt = format_sql(split_sql(txt, "snowflake", db))
+		txt = split_sql(txt, "snowflake", db)
 	except:
 		txt = split_sql(txt, "snowflake", db)
 	txt = re.sub(r';\s+', ';\n', txt)
 	#st.text('Sorry, Snowflake is still under construction')
-if not snowflake and not in_to_inner:
+if not snowflake and not in_to_inner and not in_to_inner_snow:
 	st.warning('Please choose an option from the sidebar')
 with col2:
 	#st.header('SQL Output')
