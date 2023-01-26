@@ -54,7 +54,7 @@ def snowSQL(text, db = 'MHP_FWA_DW'):
 	droptmp = r"(?i)DROP *TABLE *( *IF *EXISTS *) *(tmp.)(.*)(?:$|\W)"
 	text = re.sub(droptmp, r"CREATE OR REPLACE TEMPORARY TABLE \3 AS \n", text)
 	
-	up = r"(?i)update\s*\#?(.*)\s+set\s+((.*)\s+(\w*\s+=\s+\w*)?)\s*from\s*\#?(.*)\s*(left)?join\s*\#?(\w*)\s+(\w*)\s+on\s*(\w+.?\w+(\s+)?=(\s+)?(\w+)?.?(\w+)?\s*(and\s+\w+.?\w+(\s+)?=(\s+)?(\w+)?.?(\w+)?)?)\s+(where\s*.*\s+and\s+.*)?"
+	up = r"update\s*\#?(.*)\s+set\s+((.*)\s+(\w*\s+=\s+\w*)?)\s*from\s*\#?(.*)\s*(left)?join\s*\#?(\w*)\s+(\w*)\s+on\s*(\w+.?\w+(\s+)?=(\s+)?(\w+)?.?(\w+)?\s*(and\s+\w+.?\w+(\s+)?=(\s+)?(\w+)?.?(\w+)?)?)\s+(where\s*.*\s+and\s+.*)?"
 	text = re.sub(up, r"UPDATE \5 \n SET \3 \n FROM \8 \n WHERE \11 \n", text)
 	
 	dele = r"(?i)delete\s+\w+\s+from (\W\w*)\s+(\w+)\s+inner join\s(\W\w+)\s+(\w+)\s+on\s(\w*.*)\s+((and \w*.*\s+)+)?(\s+)?(where)?(\s+\w*\s*=\s*[\W\w]\w[\W\w])?"
