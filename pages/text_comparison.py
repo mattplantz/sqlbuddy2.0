@@ -10,9 +10,13 @@ Source: https://towardsdatascience.com/side-by-side-comparison-of-strings-in-pyt
 import streamlit as st
 import re
 import difflib
+from difflib import SequenceMatcher
 
 st.header('Text Comparison')
-st.subheader('Please paste the text you want to compare in the two separate text boxes')
+st.subheader('please paste the text you want to compare in the two separate text boxes')
+
+def similar(a, b):
+    return SequenceMatcher(None, a, b).ratio()
 
 def tokenize(s):
     return re.split('\s+', s)
@@ -79,6 +83,7 @@ col1, col2 = st.columns(2, gap ='medium')
 with st.sidebar:
     side_by_side = st.checkbox('Side by Side Comparison')
     vert = st.checkbox('Stacked Text Comparison')
+    similarity_score= st.checkbox('Similarity Score')
 
 with col1:
     s1 = st.text_area('text one to compare', '')
@@ -89,10 +94,16 @@ if side_by_side:
     try:
         show_comparison(s1, s2, sidebyside = True, compact = False)
     except:
-        st.text('Sorry. issue with comparison')
+        st.text('sorry. issue with comparison')
         
 if vert:
     try:
         show_comparison(s1, s2, sidebyside = False, compact = True)
     except:
-        st.text('Sorry. issue with comparison')
+        st.text('sorry. issue with comparison')
+
+if similarity_score:
+    try:
+        similar(s1,s2)
+    except:
+        st.text('Sorry. Issue with Similarity Score')
