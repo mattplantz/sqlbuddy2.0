@@ -12,7 +12,7 @@ import re
 import difflib
 
 st.header('Text Comparison')
-st.subheader('please paste the text you want to compare in the two separate text boxes')
+st.subheader('Please paste the text you want to compare in the two separate text boxes')
 
 def tokenize(s):
     return re.split('\s+', s)
@@ -89,10 +89,10 @@ if side_by_side:
     try:
         show_comparison(s1, s2, sidebyside = True, compact = False)
     except:
-        st.text('sorry. issue with comparison')
+        st.text('Sorry. issue with comparison')
         
 if vert:
     try:
         show_comparison(s1, s2, sidebyside = False, compact = True)
     except:
-        st.text('sorry. issue with comparison')
+        st.text('Sorry. issue with comparison')
