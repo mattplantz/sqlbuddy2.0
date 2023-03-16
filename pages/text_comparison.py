@@ -104,6 +104,6 @@ if vert:
 
 if similarity_score:
     try:
-        similar(s1,s2)
+        st.write(similar(s1,s2))
     except:
         st.text('Sorry. Issue with Similarity Score')
