@@ -2,3 +2,4 @@ streamlit == 1.14.1
 regex == 2022.7.9
 sql_formatter == 0.6.2
 usaddress == 0.5.10
+openpyxl == 3.0.10
