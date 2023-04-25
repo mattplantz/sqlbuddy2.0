@@ -18,7 +18,7 @@ def split_sql(sql, mode, db):
 	except:
 		return ''
 
-def snowSQL(text, db = ''):    
+def snowSQL(text):    
 
 	isnull = r"(?i)ISNULL *\((([\w.@]+[()'.,]*)+) *[,]+ *([\w@.']+) *\)" 
 	text = re.sub(isnull, r"COALESCE(\1,\3)", text)
@@ -27,7 +27,7 @@ def snowSQL(text, db = ''):
 	text = re.sub(tryconv, r"TRY_CAST(\2 AS \1) ", text)
 
 	tables = r"(?i)(?:[\w]*\.)*(PHI.)((\w)*)"
-	text = re.sub(tables, r"{}.\1\2 ".format(db), text)
+	text = re.sub(tables, r"\1\2 ", text)
     
 	curr_db = r"(?i)(?:^|\W)DB_NAME()"
 	text = re.sub(curr_db, r" CURRENT_DATABASE() ", text)
