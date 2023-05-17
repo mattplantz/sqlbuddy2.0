@@ -7,7 +7,7 @@ col1, col2 = st.columns(2, gap ='medium')
 
 def upper_fmt(t):
     t = t.upper()
-    t.replace('\N', '\\n')
+    t.replace('\\N', '\\n')
     return t
 
 with col1:
