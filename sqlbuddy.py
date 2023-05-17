@@ -123,7 +123,6 @@ with st.sidebar:
     in_to_inner = st.checkbox("Convert in to inner joins on MS SQL Server")
     in_to_inner_snow = st.checkbox("Convert in to inner joins on Snowflake")
     snowflake = st.checkbox("Convert to Snowflake")
-    upper = st.checkbox("Convert to Uppercase")
 
 with col1:
 	#st.header('Insert SQL Script Here')
@@ -166,9 +165,7 @@ if snowflake:
 		txt = split_sql(txt, "snowflake", db)
 	txt = re.sub(r';\s+', ';\n', txt)
 	#st.text('Sorry, Snowflake is still under construction')
-if upper:
-	txt = upper(txt)
-if not snowflake and not in_to_inner and not in_to_inner_snow and not upper:
+if not snowflake and not in_to_inner and not in_to_inner_snow:
 	st.warning('Please choose an option from the sidebar')
 with col2:
 	#st.header('SQL Output')
