@@ -15,7 +15,7 @@ col1, col2 = st.columns(2, gap ='medium')
 def upper_fmt(t):
     t = t.upper()
     
-    rmv = r"(PHI)|(PHI.)"
+    rmv = r"(PHI.)|(PHI)"
     t = re.sub(rmv, "", t)
     
     ed_tb = r"(RPT.EDITS_EX_CODES_OUTPUT)"
