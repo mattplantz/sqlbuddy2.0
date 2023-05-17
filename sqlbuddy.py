@@ -111,6 +111,11 @@ def in_to_inner_join_snow(sql, min_list=0):
         sql = re.sub(r'(?i)WHERE\s+;', ';', sql)
     return sql
 
+# convert to uppercase
+def upper(text):
+	out = text.upper()
+	return out
+
 st.header('SQL Buddy : Edit Full Queries')
 st.subheader('Please copy and paste your SQL Query in the box to the left and choose what actions you would like to perform')
 col1, col2 = st.columns(2, gap='medium')
@@ -118,6 +123,7 @@ with st.sidebar:
     in_to_inner = st.checkbox("Convert in to inner joins on MS SQL Server")
     in_to_inner_snow = st.checkbox("Convert in to inner joins on Snowflake")
     snowflake = st.checkbox("Convert to Snowflake")
+    upper = st.checkbox("Convert to Uppercase")
 
 with col1:
 	#st.header('Insert SQL Script Here')
@@ -160,7 +166,12 @@ if snowflake:
 		txt = split_sql(txt, "snowflake", db)
 	txt = re.sub(r';\s+', ';\n', txt)
 	#st.text('Sorry, Snowflake is still under construction')
-if not snowflake and not in_to_inner and not in_to_inner_snow:
+if upper:
+	try:
+		txt = upper(txt)
+	except:
+		continue
+if not snowflake and not in_to_inner and not in_to_inner_snow and not upper:
 	st.warning('Please choose an option from the sidebar')
 with col2:
 	#st.header('SQL Output')
