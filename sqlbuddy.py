@@ -167,10 +167,7 @@ if snowflake:
 	txt = re.sub(r';\s+', ';\n', txt)
 	#st.text('Sorry, Snowflake is still under construction')
 if upper:
-	try:
-		txt = upper(txt)
-	except:
-		continue
+	txt = upper(txt)
 if not snowflake and not in_to_inner and not in_to_inner_snow and not upper:
 	st.warning('Please choose an option from the sidebar')
 with col2:
