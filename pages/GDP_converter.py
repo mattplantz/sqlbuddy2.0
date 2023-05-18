@@ -24,9 +24,6 @@ def gdp(t):
     rpt = r"(.RPT)"
     t = re.sub(rpt, r".CONFIGURATION", t)
     
-    btc = r"(BILL_TYPE_CD)"
-    t = re.sub(btc, r"FACILITY_\1", t)
-    
     clm_sd = r"(CLAIM_SID)"
     t = re.sub(clm_sd, r"CLAIM_HEADER_SID", t)
     
@@ -65,6 +62,21 @@ def gdp(t):
     
     clm_sts = r"CLAIM(_STATUS_)(\w*)"
     t = re.sub(clm_sts, r"LINE\1\2", t)
+    
+    dos = r"DOS_YEAR_MONTH"
+    t = re.sub(dos, r"CLAIM_YEAR_MONTH_SERVICE_DT", t)
+    
+    icd_ind = r"(ICD_VERSION_IND)"
+    t = re.sub(icd_ind, r"DIAG_\1", t)
+    
+    fac_ = r"(BILL_TYPE_CD|DRG_VERSION_PAID)"
+    t = re.sub(fac_, r"FACILITY_\1", t)
+    
+    fac_apr_ = r"(DRG_CD_BILLED|DRG_CD_PAID|DRG_SEVERITY_BILLED|DRG_SEVERITY_PAID)"
+    t = re.sub(fac_apr_, r"FACILITY_APR_\1", t)
+    
+    fin_st = r"AAR_FINAL_STATUS_CD = 'Y'"
+    t = re.sub(fin_st, r"DP_ACTIVE_RECORD_FLAG = TRUE", t)
     
     return t
 
