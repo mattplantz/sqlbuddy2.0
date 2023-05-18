@@ -12,7 +12,7 @@ st.subheader('Please paste the text you want to convert to GDP model')
 
 col1, col2 = st.columns(2, gap ='medium')
 
-def upper_fmt(t):
+def gdp(t):
     t = t.upper()
     
     rmv = r"(PHI.)|(PHI)"
@@ -30,14 +30,47 @@ def upper_fmt(t):
     clm_sd = r"(CLAIM_SID)"
     t = re.sub(clm_sd, r"CLAIM_HEADER_SID", t)
     
-    diag = r"(DIAG_CD_)(\d\D)"
+    diagpoa = r"(DIAG_CD_)(\d)_"
+    t = re.sub(diagpoa, r"DIAG_CD_\2_",t)
+    
+    diag = r"(DIAG_CD_)(\d)"
     t = re.sub(diag, r"DIAG_CD_0\2",t)
+    
+    con_cd = r"(CONDITION_CD_)(\d\D)"
+    t = re.sub(con_cd, r"CONDITION_CD_0\2",t)
+    
+    adj = r"(ADJUDICATION_)(\w*)"
+    t = re.sub(adj, r"ADJC_\2", t)
+    
+    dn_cd = r"(DENIAL_CD_)(\d)"
+    t = re.sub(dn_cd, r"ADJC_REASON_CD_\2", t)
+    
+    dn_ds = r"(DENIAL_DESC_)(\d)"
+    t = re.sub(dn_ds, r"ADJC_REASON_DESC_\2", t)
+    
+    claim_ = r"(ADMIT_DIAG_CD|ADMIT_DT|ADMIT_SOURCE|ADMIT_TIME|ADMIT_TYPE|CREATE_DT|DISCHARGE_STATUS_CD|DISCHARGE_TIME|LENGTH_OF_STAY_ACTUAL_CNT|RURAL_IND|TRAUMA_IND)"
+    t = re.sub(claim_, r"CLAIM_\1", t)
+    
+    claim_fac_ = r"(DRG_ALLOWED_AMT|DRG_BILLED_AMT|DRG_PAID_AMT)"
+    t = re.sub(claim_fac_, r"CLAIM_FACILITY_\1", t)
+    
+    line_sq = r"(CLAIM_LINE_SEQ)"
+    t = re.sub(line_sq, r"\1_NUM", t)
+    
+    ben_pa = r"(BENEFIT_PACKAGE)"
+    t = re.sub(ben_pa, r"CLAIM_PAYER_TYPE", t)
+    
+    line = r"(PAYMENT_TYPE)"
+    t = re.sub(line, r"LINE_\1", t)
+    
+    clm_sts = r"CLAIM(_STATUS_)(\w*)"
+    t = re.sub(clm_sts, r"LINE\1\2", t)
     
     return t
 
 with col1:
     txt = st.text_area('Text to Convert', '')
 with col2:
-    st.code(upper_fmt(txt), language = "sql")
+    st.code(gdp(txt), language = "sql")
 
 
