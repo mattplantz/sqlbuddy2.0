@@ -21,8 +21,8 @@ def gdp(t):
     ed_tb = r"(RPT.EDITS_EX_CODES_OUTPUT)"
     t = re.sub(ed_tb, r"IDENTIFIER(:EDIT_OUTPUT_TABLE)", t)
     
-    rpt = r"(.RPT)"
-    t = re.sub(rpt, r".CONFIGURATION", t)
+    rpt = r"(RPT.)"
+    t = re.sub(rpt, r"CONFIGURATION.", t)
     
     clm_sd = r"(CLAIM_SID)"
     t = re.sub(clm_sd, r"CLAIM_HEADER_SID", t)
