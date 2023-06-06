@@ -76,7 +76,7 @@ def gdp(t):
     t = re.sub(fac_apr_, r"FACILITY_APR_\1", t)
     
     fin_st = r"AAR_FINAL_STATUS_CD = 'Y'"
-    t = re.sub(fin_st, r"DCH.DP_FINAL_STATUS_FLAG = TRUE", t)
+    t = re.sub(fin_st, r"FCL.DP_FINAL_STATUS_FLAG = TRUE", t)
     
     pos = r"PLACE_OF_SVC_CD"
     t = re.sub(pos, r"PLACE_OF_SERVICE_CD",t)
