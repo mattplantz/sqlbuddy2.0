@@ -30,7 +30,7 @@ def gdp(t):
     diagpoa = r"(DIAG_CD_)(\d)_"
     t = re.sub(diagpoa, r"DIAG_CD_\2_",t)
     
-    diag = r"(DIAG_CD_)(\d)"
+    diag = r"(DIAG_CD_)(\d\D)"
     t = re.sub(diag, r"DIAG_CD_0\2",t)
     
     con_cd = r"(CONDITION_CD_)(\d\D)"
