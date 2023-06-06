@@ -78,6 +78,12 @@ def gdp(t):
     fin_st = r"AAR_FINAL_STATUS_CD = 'Y'"
     t = re.sub(fin_st, r"DCH.DP_FINAL_STATUS_FLAG = TRUE", t)
     
+    pos = r"PLACE_OF_SVC_CD"
+    t = re.sub(pos, r"PLACE_OF_SERVICE_CD",t)
+    
+    tin = r"PROV_IRS_NUM"
+    t = re.sub(tin, r"PROV_TIN_NUM", t)
+    
     return t
 
 with col1:
