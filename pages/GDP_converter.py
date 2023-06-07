@@ -84,6 +84,12 @@ def gdp(t):
     tin = r"PROV_IRS_NUM"
     t = re.sub(tin, r"PROV_TIN_NUM", t)
     
+    payer = r"PROV_PAYER_NUM"
+    t = re.sub(payer, r"PROV_PAYER_ASSIGNED_ID", t)
+    
+    sp = r"PROV_SPECIALTY_1"
+    t= re.sub(sp, r"PROV_SPECIALTY_1_CD", t)
+    
     return t
 
 with col1:
