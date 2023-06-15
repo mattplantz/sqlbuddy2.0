@@ -15,6 +15,8 @@ def exists(srch, fnd):
     start = srch.find(fnd)
     if start == -1:
         return 'String does not exist in search :('
+    elif srch == '' and fnd == '':
+        return ''
     else:
         return 'String exists in search :)'
     
