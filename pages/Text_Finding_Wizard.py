@@ -12,6 +12,8 @@ st.header("Text Finding Wizard")
 st.subheader('Please input both the whole text you want to search and the text you hope to find.')
 
 def exists(srch, fnd):
+    srch = srch.lower()
+    fnd = find.lower()
     start = srch.find(fnd)
     if start == -1:
         return 'String does not exist in search :('
@@ -20,7 +22,10 @@ def exists(srch, fnd):
     else:
         return 'String exists in search :)'
     
+    
 def search(srch, fnd, length):
+    srch = srch.lower()
+    fnd = find.lower()
     start = srch.find(fnd)
     ln = len(fnd)
     end = start+ln
