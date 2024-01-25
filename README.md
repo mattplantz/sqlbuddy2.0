@@ -7,7 +7,7 @@ The goal of this application is to solve tedious daily tasks for myself and my c
 - Text Comparison: allows the user to compare to strings and calculate a similarity score or display the differences 
 - Uppercase Conversion: allows the user to convert strings to uppercase
 - Address Parser: allows the user to upload an xlsx file of addresses and parses the addresses into its constituent parts
-- GDP converter: helps the user convert from the Enterprise data model to the GDP data model
+- GDP converter: helps the user convert between two data models
 - Text Finding Wizard: allows the user to search a string for a substring and return X number of surrounding characters
 
 
